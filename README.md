@@ -13,12 +13,13 @@ We will build a tutorials listing web application using React in that:
 
 ![Project Architecture](/public/images/architecture.jpg)
 
- The `App.js` component is a container with . It has a navigation bar (from [bootstrap](https://www.npmjs.com/package/bootstrap)) that links to 
- 
 | Component | Function |
 | --- | --- |
-| App | Container with [React Router](https://reactrouter.com/) with links routes paths |
+| App | Container with [React Router](https://reactrouter.com/) that links routes paths to components |
 | TutorialsList | Retrieves and displays a list of all tutorials |
 | Tutorial | Displays a form for editing a tutorial’s data based on `:id` |
 | AddTutorial | Displays a form for submission a new tutorial |
+| TutorialService | Use [`axios`](https://www.npmjs.com/package/axios) to make HTTP requests and receive responses from backend REST APIs |
+
+![Project Structure](/public/images/structure.jpg)
 
