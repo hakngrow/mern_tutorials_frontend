@@ -21,5 +21,12 @@ We will build a tutorials listing web application using React in that:
 | AddTutorial | Displays a form for submission a new tutorial |
 | TutorialService | Use [`axios`](https://www.npmjs.com/package/axios) to make HTTP requests and receive responses from backend REST APIs |
 
+### Project structure
+
 ![Project Structure](/public/images/structure.jpg)
 
+| File(s) | Description |
+| --- | --- |
+| `package.json` | Contains 4 dependency modules: `react`, `react-router-dom`, `axios` & `bootstrap` |
+| `http-common.js` | Initializes `axios` with HTTP base URL and headers |
+| `.env` | Configures port for this React app |
