@@ -9,7 +9,7 @@ We will build a tutorials listing web application using React in that:
 - There is a search bar for finding tutorials by title.
 - The app will consume REST APIs from a `node.js` backend.  For the repo of the backend, click [here](https://github.com/hakngrow/mern_tutorials_backend).
 
-### React application architecture
+### Project Architecture
 
 ![Project Architecture](/public/images/architecture.jpg)
 
@@ -21,12 +21,36 @@ We will build a tutorials listing web application using React in that:
 | AddTutorial | Displays a form for submission a new tutorial |
 | TutorialService | Use [`axios`](https://www.npmjs.com/package/axios) to make HTTP requests and receive responses from backend REST APIs |
 
-### Project structure
+### Project Structure
 
 ![Project Structure](/public/images/structure.jpg)
 
-| File(s) | Description |
+| File | Description |
 | --- | --- |
-| `package.json` | Contains 4 dependency modules: `react`, `react-router-dom`, `axios` & `bootstrap` |
+| `package.json` | Contains 4 dependency modules: `react`, `react-router-dom`, `axios` and `bootstrap` |
 | `http-common.js` | Initializes `axios` with HTTP base URL and headers |
 | `.env` | Configures port for this React app |
+
+### Project Setup
+
+At the directory you wish to store the project, start a terminal or command line session.
+
+Run the command `npx create-react-app tutorials-frontend`.
+
+After the process is done, create the following folders/files:
+
+| Type | Name |
+| --- | --- |
+| Folder | /src/components |
+| File | /src/components/AddTutorial.js |
+| File | /src/components/Tutorial.js |
+| File | /src/components/TutorialsList.js ||
+| Folder | /src/services |
+| File | /src/services/TutorialService.js |
+
+
+
+
+
+
+
