@@ -44,11 +44,29 @@ After the process is done, create the following folders/files:
 | Folder | /src/components |
 | File | /src/components/AddTutorial.js |
 | File | /src/components/Tutorial.js |
-| File | /src/components/TutorialsList.js ||
+| File | /src/components/TutorialsList.js |
 | Folder | /src/services |
 | File | /src/services/TutorialService.js |
 
+### Install `bootstrap`
 
+Run `npm install bootstrap` to install the `bootstrap` module for styling.
+
+Modify `/src/App.js` as below to import the `bootstrap` CSS:
+
+```
+import React from "react";
+
+import "bootstrap/dist/css/bootstrap.min.css";
+
+function App() {
+  return (
+    ...
+  );
+}
+
+export default App;
+```
 
 
 
