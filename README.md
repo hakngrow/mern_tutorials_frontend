@@ -47,6 +47,7 @@ After the process is done, create the following folders/files:
 | File | /src/components/TutorialsList.js |
 | Folder | /src/services |
 | File | /src/services/TutorialService.js |
+| File | /src/http-common.js |
 
 
 ### Install and Setup `bootstrap`
@@ -139,6 +140,30 @@ function App() {
 
 export default App;
 ```
+
+### Install and Setup `axios`
+
+Run the command `npm install axios` to install the `axios` module.
+
+Modify `/src/http-common.js` as below:
+
+```
+import axios from "axios";
+
+export default axios.create({
+  baseURL: "http://localhost:8080/api",
+  headers: {
+    "Content-type": "application/json"
+  }
+});
+```
+
+Change the `baseURL` to where the REST APIs are hosted.  For more information about `axios`, click [here](https://axios-http.com/).
+
+
+
+
+
 
 
 
