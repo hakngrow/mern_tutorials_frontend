@@ -48,6 +48,7 @@ After the process is done, create the following folders/files:
 | Folder | /src/services |
 | File | /src/services/TutorialService.js |
 
+
 ### Install and Setup `bootstrap`
 
 Run the command `npm install bootstrap` to install the `bootstrap` module for styling.
@@ -88,6 +89,13 @@ ReactDOM.render(
   document.getElementById('root')
 );
 ```
+
+### Add `bootstrap` Navigation Bar 
+
+Modify `App.js` to include a navigation bar with React Router `<Link>` anchor tags.  Each `<link>` tag will have a path to link to (e.g. `/tutorials`).  The path links to a `<Route>` within the `<Switch>` tag. And each `<Route>` tag points to a React component.
+
+
+
 
 
 
