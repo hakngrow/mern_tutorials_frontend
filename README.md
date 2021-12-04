@@ -48,9 +48,9 @@ After the process is done, create the following folders/files:
 | Folder | /src/services |
 | File | /src/services/TutorialService.js |
 
-### Install `bootstrap`
+### Install and Setup `bootstrap`
 
-Run `npm install bootstrap` to install the `bootstrap` module for styling.
+Run the command `npm install bootstrap` to install the `bootstrap` module for styling.
 
 Modify `/src/App.js` as below to import the `bootstrap` CSS:
 
@@ -67,6 +67,29 @@ function App() {
 
 export default App;
 ```
+
+### Install and Setup React Router
+
+Run the command `npm install react-router-dom` to install React Router.
+
+Modify `/src/index.js` to wrap the `App` component in the `BrowserRouter` component as below:
+
+```
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter } from "react-router-dom";
+
+import App from './App';
+
+ReactDOM.render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
+  document.getElementById('root')
+);
+```
+
+
 
 
 
