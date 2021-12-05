@@ -722,7 +722,7 @@ Create `/src/App.css` and modify it as follows:
 }
 ```
 
-### 10. Configure HTTP Port
+### 11. Configure HTTP Port
 
 Most of HTTP servers use CORS configuration that accepts resource sharing restricted to pre-defined sites or ports.  Likewise, we will configure our app to be served from port 8081.
 
@@ -730,6 +730,14 @@ In the project folder, create a `.env` file with following content:
 ```
 PORT=8081
 ```
+
+### 12. Run React CRUD App
+
+Run the React app with the command: `npm start`.
+
+If successful, the default browser opens with URL `http://localhost:8081/`.
+
+
 
 
 
