@@ -324,6 +324,12 @@ const AddTutorial = () => {
 export default AddTutorial;
 ```
 
+First, we define and set initial state of `tutorial` and  `submitted`.
+
+Next, we create the `handleInputChange` function to track the values of the input and set the `tutorial` state for changes. We also have a function to get tutorial state and send the POST request to the REST API. It calls the `TutorialService.create` function.
+
+On return, we check the `submitted` state, if it is true, we show the `Add` button for creating a new tutorial again. Otherwise, a form with a `Submit` button will be display.
+
 
 
 
