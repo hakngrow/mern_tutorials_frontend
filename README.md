@@ -219,7 +219,117 @@ export default services;
 
  ### 9. Create React Components
  
- Next we need to build 3 React components corresponding to the 3 `<Route>` tags we defined [earlier]().
+ Next we need to build 3 React components corresponding to the 3 `<Route>` tags we defined [earlier](https://github.com/hakngrow/mern_tutorials_frontend/blob/master/README.md#6-add-bootstrap-navigation-bar).
+ 
+ #### 9.1 `AddTutorial` Component
+ 
+ The `AddTutorial` component renders a form to create a new tutorial with 2 fields: `title` and `description`.
+ 
+![AddTutorial Component](/public/images/AddTutorial.jpg)
+
+Modify the `/src/components/AddTutorial.js` as follow:
+
+```
+import React, { useState } from "react";
+import TutorialDataService from "../services/TutorialService";
+
+const AddTutorial = () => {
+  const initialTutorialState = {
+    id: null,
+    title: "",
+    description: "",
+    published: false,
+  };
+  const [tutorial, setTutorial] = useState(initialTutorialState);
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setTutorial({ ...tutorial, [name]: value });
+  };
+
+  const saveTutorial = () => {
+    var data = {
+      title: tutorial.title,
+      description: tutorial.description,
+    };
+
+    TutorialDataService.create(data)
+      .then((response) => {
+        setTutorial({
+          id: response.data.id,
+          title: response.data.title,
+          description: response.data.description,
+          published: response.data.published,
+        });
+        setSubmitted(true);
+        console.log(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const newTutorial = () => {
+    setTutorial(initialTutorialState);
+    setSubmitted(false);
+  };
+
+  return (
+    <div className="submit-form">
+      {submitted ? (
+        <div>
+          <h4>You submitted successfully!</h4>
+          <button className="btn btn-success" onClick={newTutorial}>
+            Add
+          </button>
+        </div>
+      ) : (
+        <div>
+          <div className="form-group">
+            <label htmlFor="title">Title</label>
+            <input
+              type="text"
+              className="form-control"
+              id="title"
+              required
+              value={tutorial.title}
+              onChange={handleInputChange}
+              name="title"
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="description">Description</label>
+            <input
+              type="text"
+              className="form-control"
+              id="description"
+              required
+              value={tutorial.description}
+              onChange={handleInputChange}
+              name="description"
+            />
+          </div>
+
+          <button onClick={saveTutorial} className="btn btn-success">
+            Submit
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default AddTutorial;
+```
+
+First, we define and set initial state of `tutorial` and  `submitted`.
+
+Next, we create the `handleInputChange` function to track the values of the input and set the `tutorial` state for changes. We also have a function to get tutorial state and send the POST request to the REST API. It calls the `TutorialService.create` function.
+
+On return, we check the `submitted` state, if it is true, we show the `Add` button for creating a new tutorial again. Otherwise, a form with a `Submit` button will be display.
+
 
 
 
