@@ -326,9 +326,39 @@ export default AddTutorial;
 
 First, we define and set initial state of `tutorial` and  `submitted`.
 
-Next, we create the `handleInputChange` function to track the values of the input and set the `tutorial` state for changes. We also have a function to get tutorial state and send the POST request to the REST API. It calls the `TutorialService.create` function.
+Next, we create the `handleInputChange()` function to track the values of the input and set the `tutorial` state for changes. We also have a function to get `tutorial` state and send the POST request to the REST API. It calls the `TutorialService.create()` function.
 
 On return, we check the `submitted` state, if it is true, we show the `Add` button for creating a new tutorial again. Otherwise, a form with a `Submit` button will be display.
+
+#### 9.2 `TutorialsList` Component
+
+The `TutorialsList` component has the following features:
+- A search bar for finding tutorials by `title`
+- A list of tutorial titles displayed on the left with a `Remove All` button at the bottom
+- A selected tutorial's `title`, `description` and `status` is displayed on the right with a `Edit` button at the button
+
+![TutorialsList Component](/public/images/TutorialsList.jpg)
+
+In this component, we have following states:
+- searchTitle - The input value of the tutorial title search bar
+- tutorials - The list of tutorials in the list
+- currentTutorial - The selected tutorial 
+- currentIndex - The list index of the selcted tutorial
+- 
+We also need to use 3 TutorialDataService functions:
+
+getAll()
+removeAll()
+findByTitle()
+
+
+```
+
+```
+
+
+
+
 
 
 
