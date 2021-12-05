@@ -161,9 +161,55 @@ export default axios.create({
 Change the `baseURL` to where your REST APIs are hosted.  For more information about `axios`, click [here](https://axios-http.com/).
 
 
-### Create Data Service
+### Create Tutorials Data Service
 
+Next we will create a data service that uses the `axios` module above to send HTTP requests to the REST APIs at the configured `baseURL`.
 
+We call 'axios' (imported as 'http') `get`, `post`, `put`, `delete` functions corresponding to the HTTP GET, POST, PUT, DELETE methods to make CRUD operations.
+
+```
+import http from "../http-common";
+
+const getAll = () => {
+  return http.get("/tutorials");
+};
+
+const get = (id) => {
+  return http.get(`/tutorials/${id}`);
+};
+
+const create = (data) => {
+  return http.post("/tutorials", data);
+};
+
+const update = (id, data) => {
+  return http.put(`/tutorials/${id}`, data);
+};
+
+const remove = (id) => {
+  return http.delete(`/tutorials/${id}`);
+};
+
+const removeAll = () => {
+  return http.delete(`/tutorials`);
+};
+
+const findByTitle = (title) => {
+  return http.get(`/tutorials?title=${title}`);
+};
+
+const services = {
+  getAll,
+  get,
+  create,
+  update,
+  remove,
+  removeAll,
+  findByTitle,
+};
+
+export default services;
+```
 
 
 
