@@ -345,14 +345,12 @@ In this component, we have following states:
 - `currentTutorial` - The selected tutorial 
 - `currentIndex` - The list index of the selcted tutorial
 
-
 We will need to use 3 `TutorialService` functions:
 - `getAll()` - To retrieve all tutorials
 - `removeAll()` - To delete all tutorials
 - `findByTitle()` - To find tutorials by `title`
 
-We use the `useEffect` hook with an empty dependency array to retrieve a list of all tutorials when the component mounts.
-
+Modify `/src/components/TutorialsList.js` as follows:
 ```
 import React, { useState, useEffect } from "react";
 import TutorialService from "../services/TutorialService";
@@ -423,8 +421,9 @@ const TutorialsList = () => {
 };
 
 export default TutorialsList;
-
 ```
+
+We use the `useEffect` hook with an empty dependency array to retrieve a list of all tutorials when the component mounts.
 
 
 
