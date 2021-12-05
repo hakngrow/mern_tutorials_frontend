@@ -527,6 +527,17 @@ export default TutorialsList;
 
 On clicking the `Edit` button, the app will render the `Tutorial` component.  We use the React Router `<Link>` tag to access that component with the path URL `/tutorials/:id`, where `id` is the `id` of the selected tutorial.
 
+#### 9.3 `Tutorial` Component
+
+For retrieving, updating and deleting a tutorial, this component 3 `TutorialService` functions:
+- `get()` - To retireve a tutorial by `id`
+- `update()` - To edit a tutorial
+- `delete()` - To remove a tutorial by `id`
+
+
+
+
+
 
 
 
