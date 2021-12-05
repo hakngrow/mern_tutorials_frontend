@@ -340,19 +340,89 @@ The `TutorialsList` component has the following features:
 ![TutorialsList Component](/public/images/TutorialsList.jpg)
 
 In this component, we have following states:
-- searchTitle - The input value of the tutorial title search bar
-- tutorials - The list of tutorials in the list
-- currentTutorial - The selected tutorial 
-- currentIndex - The list index of the selcted tutorial
-- 
-We also need to use 3 TutorialDataService functions:
+- `searchTitle` - The input value of the tutorial title search bar
+- `tutorials` - The list of tutorials in the list
+- `currentTutorial` - The selected tutorial 
+- `currentIndex` - The list index of the selcted tutorial
 
-getAll()
-removeAll()
-findByTitle()
 
+We will need to use 3 `TutorialService` functions:
+- `getAll()` - To retrieve all tutorials
+- `removeAll()` - To delete all tutorials
+- `findByTitle()` - To find tutorials by `title`
+
+We use the `useEffect` hook with an empty dependency array to retrieve a list of all tutorials when the component mounts.
 
 ```
+import React, { useState, useEffect } from "react";
+import TutorialService from "../services/TutorialService";
+import { Link } from "react-router-dom";
+
+const TutorialsList = () => {
+  const [tutorials, setTutorials] = useState([]);
+  const [currentTutorial, setCurrentTutorial] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(-1);
+  const [searchTitle, setSearchTitle] = useState("");
+
+  useEffect(() => {
+    retrieveTutorials();
+  }, []);
+
+  const onChangeSearchTitle = (e) => {
+    const searchTitle = e.target.value;
+    setSearchTitle(searchTitle);
+  };
+
+  const retrieveTutorials = () => {
+    TutorialService.getAll()
+      .then((response) => {
+        setTutorials(response.data);
+        console.log(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const refreshList = () => {
+    retrieveTutorials();
+    setCurrentTutorial(null);
+    setCurrentIndex(-1);
+  };
+
+  const setActiveTutorial = (tutorial, index) => {
+    setCurrentTutorial(tutorial);
+    setCurrentIndex(index);
+  };
+
+  const removeAllTutorials = () => {
+    TutorialService.removeAll()
+      .then((response) => {
+        console.log(response.data);
+        refreshList();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const findByTitle = () => {
+    TutorialService.findByTitle(searchTitle)
+      .then((response) => {
+        setTutorials(response.data);
+        console.log(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  return (
+    // ...
+  );
+};
+
+export default TutorialsList;
 
 ```
 
