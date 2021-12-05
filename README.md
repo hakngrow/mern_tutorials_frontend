@@ -326,9 +326,429 @@ export default AddTutorial;
 
 First, we define and set initial state of `tutorial` and  `submitted`.
 
-Next, we create the `handleInputChange` function to track the values of the input and set the `tutorial` state for changes. We also have a function to get tutorial state and send the POST request to the REST API. It calls the `TutorialService.create` function.
+Next, we create the `handleInputChange()` function to track the values of the input and set the `tutorial` state for changes. We also have a function to get `tutorial` state and send the POST request to the REST API. It calls the `TutorialService.create()` function.
 
 On return, we check the `submitted` state, if it is true, we show the `Add` button for creating a new tutorial again. Otherwise, a form with a `Submit` button will be display.
+
+#### 9.2 `TutorialsList` Component
+
+The `TutorialsList` component has the following features:
+- A search bar for finding tutorials by `title`
+- A list of tutorial titles displayed on the left with a `Remove All` button at the bottom
+- A selected tutorial's `title`, `description` and `status` is displayed on the right with a `Edit` button at the button
+
+![TutorialsList Component](/public/images/TutorialsList.jpg)
+
+In this component, we have following states:
+- `searchTitle` - The input value of the tutorial title search bar
+- `tutorials` - The list of tutorials in the list
+- `currentTutorial` - The selected tutorial 
+- `currentIndex` - The list index of the selcted tutorial
+
+We will need to use 3 `TutorialService` functions:
+- `getAll()` - To retrieve all tutorials
+- `removeAll()` - To delete all tutorials
+- `findByTitle()` - To find tutorials by `title`
+
+Modify `/src/components/TutorialsList.js` as follows:
+```
+import React, { useState, useEffect } from "react";
+import TutorialService from "../services/TutorialService";
+import { Link } from "react-router-dom";
+
+const TutorialsList = () => {
+  const [tutorials, setTutorials] = useState([]);
+  const [currentTutorial, setCurrentTutorial] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(-1);
+  const [searchTitle, setSearchTitle] = useState("");
+
+  useEffect(() => {
+    retrieveTutorials();
+  }, []);
+
+  const onChangeSearchTitle = (e) => {
+    const searchTitle = e.target.value;
+    setSearchTitle(searchTitle);
+  };
+
+  const retrieveTutorials = () => {
+    TutorialService.getAll()
+      .then((response) => {
+        setTutorials(response.data);
+        console.log(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const refreshList = () => {
+    retrieveTutorials();
+    setCurrentTutorial(null);
+    setCurrentIndex(-1);
+  };
+
+  const setActiveTutorial = (tutorial, index) => {
+    setCurrentTutorial(tutorial);
+    setCurrentIndex(index);
+  };
+
+  const removeAllTutorials = () => {
+    TutorialService.removeAll()
+      .then((response) => {
+        console.log(response.data);
+        refreshList();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const findByTitle = () => {
+    TutorialService.findByTitle(searchTitle)
+      .then((response) => {
+        setTutorials(response.data);
+        console.log(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  return (
+    // ...
+  );
+};
+
+export default TutorialsList;
+```
+
+We use the `useEffect` hook with an empty dependency array to retrieve a list of all tutorials when the component mounts.
+
+To implement the UI elements of the component, we use the following JSX:
+
+```
+...
+import { Link } from "react-router-dom";
+
+const TutorialsList = () => {
+  ...
+
+  return (
+    <div className="list row">
+      <div className="col-md-8">
+        <div className="input-group mb-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Search by title"
+            value={searchTitle}
+            onChange={onChangeSearchTitle}
+          />
+          <div className="input-group-append">
+            <button
+              className="btn btn-outline-secondary"
+              type="button"
+              onClick={findByTitle}
+            >
+              Search
+            </button>
+          </div>
+        </div>
+      </div>
+      <div className="col-md-6">
+        <h4>Tutorials List</h4>
+
+        <ul className="list-group">
+          {tutorials &&
+            tutorials.map((tutorial, index) => (
+              <li
+                className={
+                  "list-group-item " + (index === currentIndex ? "active" : "")
+                }
+                onClick={() => setActiveTutorial(tutorial, index)}
+                key={index}
+              >
+                {tutorial.title}
+              </li>
+            ))}
+        </ul>
+
+        <button
+          className="m-3 btn btn-sm btn-danger"
+          onClick={removeAllTutorials}
+        >
+          Remove All
+        </button>
+      </div>
+      <div className="col-md-6">
+        {currentTutorial ? (
+          <div>
+            <h4>Tutorial</h4>
+            <div>
+              <label>
+                <strong>Title:</strong>
+              </label>{" "}
+              {currentTutorial.title}
+            </div>
+            <div>
+              <label>
+                <strong>Description:</strong>
+              </label>{" "}
+              {currentTutorial.description}
+            </div>
+            <div>
+              <label>
+                <strong>Status:</strong>
+              </label>{" "}
+              {currentTutorial.published ? "Published" : "Pending"}
+            </div>
+
+            <Link
+              to={"/tutorials/" + currentTutorial.id}
+              className="badge badge-warning"
+            >
+              Edit
+            </Link>
+          </div>
+        ) : (
+          <div>
+            <br />
+            <p>Please click on a Tutorial...</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default TutorialsList;
+```
+
+On clicking the `Edit` button, the app will render the `Tutorial` component.  We use the React Router `<Link>` tag to access that component with the path URL `/tutorials/:id`, where `id` is the `id` of the selected tutorial.
+
+#### 9.3 `Tutorial` Component
+
+For retrieving, updating and deleting a tutorial, this component 3 `TutorialService` functions:
+- `get()` - To retireve a tutorial by `id`
+- `update()` - To edit a tutorial
+- `delete()` - To remove a tutorial by `id`
+
+Modify `/src/components/Tutorial.js` as the following:
+```
+import React, { useState, useEffect } from "react";
+import TutorialDataService from "../services/TutorialService";
+
+const Tutorial = (props) => {
+  const initialTutorialState = {
+    id: null,
+    title: "",
+    description: "",
+    published: false,
+  };
+  const [currentTutorial, setCurrentTutorial] = useState(initialTutorialState);
+  const [message, setMessage] = useState("");
+
+  const getTutorial = (id) => {
+    TutorialService.get(id)
+      .then((response) => {
+        setCurrentTutorial(response.data);
+        console.log(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  useEffect(() => {
+    getTutorial(props.match.params.id);
+  }, [props.match.params.id]);
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setCurrentTutorial({ ...currentTutorial, [name]: value });
+  };
+
+  const updatePublished = (status) => {
+    var data = {
+      id: currentTutorial.id,
+      title: currentTutorial.title,
+      description: currentTutorial.description,
+      published: status,
+    };
+
+    TutorialService.update(currentTutorial.id, data)
+      .then((response) => {
+        setCurrentTutorial({ ...currentTutorial, published: status });
+        console.log(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const updateTutorial = () => {
+    TutorialService.update(currentTutorial.id, currentTutorial)
+      .then((response) => {
+        console.log(response.data);
+        setMessage("The tutorial was updated successfully!");
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const deleteTutorial = () => {
+    TutorialService.remove(currentTutorial.id)
+      .then((response) => {
+        console.log(response.data);
+        props.history.push("/tutorials");
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+  
+  return (
+    // ...
+  );
+};
+
+export default Tutorial;
+```
+
+And to render the UI of the component, the `JSX` returned is as follows:
+```
+const Tutorial = (props) => {
+  ...
+  
+  return (
+    <div>
+      {currentTutorial ? (
+        <div className="edit-form">
+          <h4>Tutorial</h4>
+          <form>
+            <div className="form-group">
+              <label htmlFor="title">Title</label>
+              <input
+                type="text"
+                className="form-control"
+                id="title"
+                name="title"
+                value={currentTutorial.title}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="description">Description</label>
+              <input
+                type="text"
+                className="form-control"
+                id="description"
+                name="description"
+                value={currentTutorial.description}
+                onChange={handleInputChange}
+              />
+            </div>
+
+            <div className="form-group">
+              <label>
+                <strong>Status:</strong>
+              </label>
+              {currentTutorial.published ? "Published" : "Pending"}
+            </div>
+          </form>
+
+          {currentTutorial.published ? (
+            <button
+              className="badge badge-primary mr-2"
+              onClick={() => updatePublished(false)}
+            >
+              UnPublish
+            </button>
+          ) : (
+            <button
+              className="badge badge-primary mr-2"
+              onClick={() => updatePublished(true)}
+            >
+              Publish
+            </button>
+          )}
+
+          <button className="badge badge-danger mr-2" onClick={deleteTutorial}>
+            Delete
+          </button>
+
+          <button
+            type="submit"
+            className="badge badge-success"
+            onClick={updateTutorial}
+          >
+            Update
+          </button>
+          <p>{message}</p>
+        </div>
+      ) : (
+        <div>
+          <br />
+          <p>Please click on a Tutorial...</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Tutorial;
+```
+
+### 10. Add CSS Style to React Components
+
+Create `/src/App.css` and modify it as follows:
+```
+.list {
+  text-align: left;
+  max-width: 750px;
+  margin: auto;
+}
+
+.submit-form {
+  max-width: 300px;
+  margin: auto;
+}
+
+.edit-form {
+  max-width: 300px;
+  margin: auto;
+}
+```
+
+### 11. Configure HTTP Port
+
+Most of HTTP servers use CORS configuration that accepts resource sharing restricted to pre-defined sites or ports.  Likewise, we will configure our app to be served from port 8081.
+
+In the project folder, create a `.env` file with following content:
+```
+PORT=8081
+```
+
+### 12. Run React CRUD App
+
+Run the React app with the command: `npm start`.
+
+If successful, the default browser opens with URL `http://localhost:8081/`.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
