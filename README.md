@@ -1,6 +1,6 @@
 ## Tutorials Listing app using MERN stack - React Webapp
 
-### Features
+### 1. Features
 
 We will build a tutorials listing web application using React in that:
 
@@ -9,7 +9,7 @@ We will build a tutorials listing web application using React in that:
 - There is a search bar for finding tutorials by title.
 - The app will consume REST APIs from a `node.js` backend.  For the repo of the backend, click [here](https://github.com/hakngrow/mern_tutorials_backend).
 
-### Project Architecture
+### 2. Project Architecture
 
 ![Project Architecture](/public/images/architecture.jpg)
 
@@ -21,7 +21,7 @@ We will build a tutorials listing web application using React in that:
 | AddTutorial | Displays a form for submission a new tutorial |
 | TutorialService | Use [`axios`](https://www.npmjs.com/package/axios) to make HTTP requests and receive responses from backend REST APIs |
 
-### Project Structure
+### 3. Project Structure
 
 ![Project Structure](/public/images/structure.jpg)
 
@@ -31,7 +31,7 @@ We will build a tutorials listing web application using React in that:
 | `http-common.js` | Initializes `axios` with HTTP base URL and headers |
 | `.env` | Configures port for this React app |
 
-### Project Setup
+### 4. Project Setup
 
 At the directory you wish to store the project, start a terminal or command line session.
 
@@ -50,7 +50,7 @@ After the process is done, create the following folders/files:
 | File | /src/http-common.js |
 
 
-### Install and Setup `bootstrap`
+### 5. Install and Setup `bootstrap`
 
 Run the command `npm install bootstrap` to install the `bootstrap` module for styling.
 
@@ -91,7 +91,7 @@ ReactDOM.render(
 );
 ```
 
-### Add `bootstrap` Navigation Bar 
+### 6. Add `bootstrap` Navigation Bar 
 
 Modify `App.js` to include a navigation bar with React Router `<Link>` anchor tags.  Each `<link>` tag will have a path to link to (e.g. `/tutorials`).  The path links to a `<Route>` within the `<Switch>` tag. And each `<Route>` tag points to a React component (e.g. `/src/components/TutorialsList.js`).
 
@@ -141,7 +141,7 @@ function App() {
 export default App;
 ```
 
-### Install and Setup `axios`
+### 7. Install and Setup `axios`
 
 Run the command `npm install axios` to install the `axios` module.
 
@@ -160,12 +160,11 @@ export default axios.create({
 
 Change the `baseURL` to where your REST APIs are hosted.  For more information about `axios`, click [here](https://axios-http.com/).
 
-
-### Create Tutorials Data Service
+### 8. Create Tutorials Data Service
 
 Next we will create a data service that uses the `axios` module above to send HTTP requests to the REST APIs at the configured `baseURL`.
 
-We call 'axios' (imported as 'http') `get`, `post`, `put`, `delete` functions corresponding to the HTTP GET, POST, PUT, DELETE methods to make CRUD operations.
+We call the `axios` (imported as 'http') `get`, `post`, `put`, `delete` functions corresponding to the HTTP GET, POST, PUT, DELETE methods to make CRUD operations.
 
 ```
 import http from "../http-common";
@@ -211,7 +210,7 @@ const services = {
 export default services;
 ```
 
-
+ ### 9. Create React Components
 
 
 
