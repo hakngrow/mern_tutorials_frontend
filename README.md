@@ -703,7 +703,7 @@ export default Tutorial;
 
 ### 10. Add CSS Style to React Components
 
-Create `/src/App.css` and modify as follows:
+Create `/src/App.css` and modify it as follows:
 ```
 .list {
   text-align: left;
@@ -721,6 +721,18 @@ Create `/src/App.css` and modify as follows:
   margin: auto;
 }
 ```
+
+### 10. Configure HTTP Port
+
+Most of HTTP servers use CORS configuration that accepts resource sharing restricted to pre-defined sites or ports.  Likewise, we will configure our app to be served from port 8081.
+
+In the project folder, create a `.env` file with following content:
+```
+PORT=8081
+```
+
+
+
 
 
 
