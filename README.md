@@ -166,6 +166,13 @@ Next we will create a data service that uses the `axios` module above to send HT
 
 We call the `axios` (imported as 'http') `get`, `post`, `put`, `delete` functions corresponding to the HTTP GET, POST, PUT, DELETE methods to make CRUD operations.
 
+The service exports the following CRUD and finder operations:
+- CREATE: create
+- RETRIEVE: getAll, get
+- UPDATE: update
+- DELETE: remove, removeAll
+- FINDER: findByTitle
+
 ```
 import http from "../http-common";
 
@@ -211,6 +218,8 @@ export default services;
 ```
 
  ### 9. Create React Components
+ 
+ Next we need to build 3 React components corresponding to the 3 `<Route>` tags we defined [earlier]().
 
 
 
