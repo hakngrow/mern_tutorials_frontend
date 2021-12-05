@@ -699,7 +699,27 @@ const Tutorial = (props) => {
 };
 
 export default Tutorial;
+```
 
+### 10. Add CSS Style to React Components
+
+Create `/src/App.css` and modify as follows:
+```
+.list {
+  text-align: left;
+  max-width: 750px;
+  margin: auto;
+}
+
+.submit-form {
+  max-width: 300px;
+  margin: auto;
+}
+
+.edit-form {
+  max-width: 300px;
+  margin: auto;
+}
 ```
 
 
